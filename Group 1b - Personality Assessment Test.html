@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>Entrepreneurial mindset · classroom growth test</title>
+  <style>
+    /* ----- RESET & BASE ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #e9f3f1 0%, #d4e8e5 100%);
+      font-family: 'Inter', 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 1.5rem;
+      line-height: 1.5;
+    }
+
+    /* ----- MAIN CARD ----- */
+    .card {
+      max-width: 820px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 2.5rem;
+      box-shadow: 0 25px 40px -12px rgba(20, 60, 70, 0.25), 0 8px 15px rgba(0, 50, 60, 0.1);
+      padding: 2.5rem 2.2rem;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(110, 150, 160, 0.15);
+    }
+
+    /* ----- TYPOGRAPHY & TITLES (used in both screens) ----- */
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #0b3b42;
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #2f6b75;
+      margin-bottom: 2rem;
+      border-left: 5px solid #4faab3;
+      padding-left: 1.2rem;
+      background: #f0f9fc;
+      border-radius: 0 40px 40px 0;
+      width: fit-content;
+      padding: 0.5rem 1.5rem 0.5rem 1.2rem;
+    }
+
+    /* ----- START SCREEN (visible by default) ----- */
+    .start-screen {
+      text-align: center;
+      padding: 1rem 0 2rem 0;
+    }
+
+    .start-screen .subtitle {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .start-btn {
+      background: #2f8a9b;
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 600;
+      padding: 1rem 3.5rem;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow: 0 12px 22px -10px #1a6a78, 0 3px 10px rgba(0,50,55,0.2);
+      transition: all 0.15s ease;
+      border: 1px solid #57b5c2;
+      margin-top: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    .start-btn:hover {
+      background: #359fb1;
+      transform: scale(1.02);
+      box-shadow: 0 18px 28px -8px #1e6e7c;
+    }
+
+    .start-btn:active {
+      background: #1d707e;
+      transform: scale(0.98);
+    }
+
+    /* ----- QUIZ CONTENT (hidden until start) ----- */
+    .quiz-content {
+      display: none;  /* hidden initially */
+    }
+
+    /* ----- QUESTION BLOCKS ----- */
+    .questions-area {
+      margin: 1.5rem 0 2rem;
+    }
+
+    .question-item {
+      background: #f9fdfe;
+      border-radius: 2rem;
+      padding: 1.3rem 1.8rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 6px rgba(70, 130, 140, 0.08);
+      border: 1px solid #cfecf0;
+      transition: background 0.15s;
+    }
+
+    .question-item:hover {
+      background: #ffffff;
+      border-color: #9ecbd3;
+    }
+
+    .question-text {
+      font-size: 1.28rem;
+      font-weight: 550;
+      color: #154e5a;
+      margin-bottom: 0.7rem;
+    }
+
+    /* ----- RADIO BUTTONS (styled) ----- */
+    .radio-group {
+      display: flex;
+      gap: 2.2rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #1c5c66;
+      background: #eef8fa;
+      padding: 0.4rem 1.2rem 0.4rem 0.8rem;
+      border-radius: 40px;
+      transition: background 0.15s, box-shadow 0.1s;
+      border: 1px solid transparent;
+    }
+
+    .radio-option:hover {
+      background: #dff2f5;
+      border-color: #86bfc9;
+    }
+
+    .radio-option input[type="radio"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 1.3rem;
+      height: 1.3rem;
+      border: 2px solid #46828d;
+      border-radius: 50%;
+      margin-right: 0.6rem;
+      position: relative;
+      cursor: pointer;
+      background: white;
+      transition: 0.1s;
+    }
+
+    .radio-option input[type="radio"]:checked {
+      border-color: #1a6e7a;
+      background-color: #1a6e7a;
+      box-shadow: inset 0 0 0 4px white;
+    }
+
+    .radio-option input[type="radio"]:focus-visible {
+      outline: 2px solid #8fc1c9;
+      outline-offset: 2px;
+    }
+
+    /* ----- BUTTON (clean, no emoji) ----- */
+    .action-btn {
+      display: flex;
+      justify-content: center;
+      margin: 2.5rem 0 1.8rem;
+    }
+
+    .check-btn {
+      background: #1d717d;
+      border: none;
+      color: white;
+      font-size: 1.6rem;
+      font-weight: 550;
+      padding: 0.9rem 3rem;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 20px -7px #18626b, 0 3px 8px rgba(0,40,45,0.2);
+      transition: all 0.15s ease;
+      letter-spacing: 0.3px;
+      border: 1px solid #3597a3;
+      width: fit-content;
+      min-width: 260px;
+    }
+
+    .check-btn:hover {
+      background: #1b828f;
+      transform: scale(1.02);
+      box-shadow: 0 15px 25px -8px #1a5f69;
+    }
+
+    .check-btn:active {
+      background: #135c66;
+      transform: scale(0.98);
+      box-shadow: 0 5px 12px -3px #104a52;
+    }
+
+    /* ----- RESULT PANEL (with crown icon prefix) ----- */
+    .result-box {
+      background: #e3f3f5;
+      border-radius: 2rem;
+      padding: 1.8rem 2rem;
+      margin: 1.8rem 0 2rem;
+      border-left: 10px solid #2b8c9c;
+      box-shadow: inset 0 1px 5px rgba(255,255,255,0.9), 0 6px 14px rgba(60, 110, 120, 0.15);
+    }
+
+    .result-message {
+      font-size: 1.9rem;
+      font-weight: 550;
+      color: #09424b;
+      line-height: 1.3;
+    }
+
+    .result-message::before {
+      content: "👑 ";  /* crown icon only for result messages (dynamic) */
+      font-size: 2rem;
+      display: inline;
+    }
+
+    /* special handling for non‑result states (waiting / error) — we hide the crown via JS logic */
+    .result-message.no-crown::before {
+      content: none;   /* remove crown for neutral/error messages */
+    }
+
+    .result-score {
+      font-size: 1.4rem;
+      color: #105e6b;
+      margin-top: 0.4rem;
+    }
+
+    /* error style (soft, no emoji) */
+    .error-message {
+      color: #a6404b;
+      background: #fce8ea;
+      border-radius: 40px;
+      padding: 0.5rem 1.8rem;
+      font-weight: 470;
+      font-size: 1.2rem;
+      text-align: center;
+      border-left: 5px solid #b54754;
+    }
+
+    /* ----- GROWTH NOTE (replaces theory list) ----- */
+    .growth-note {
+      background: #f2fafc;
+      border-radius: 1.8rem;
+      padding: 1.4rem 1.8rem;
+      font-size: 1.15rem;
+      color: #1a5762;
+      margin: 1.5rem 0 0.8rem;
+      border: 1px solid #9fcbd5;
+      text-align: center;
+      box-shadow: 0 2px 10px #c3e3e9;
+    }
+
+    .growth-note strong {
+      color: #094e5a;
+      font-weight: 650;
+      display: inline-block;
+      margin: 0.25rem 0;
+    }
+
+    /* ----- DISCLAIMER ----- */
+    .disclaimer {
+      font-size: 1rem;
+      color: #597f88;
+      text-align: center;
+      border-top: 1px solid #b3d6de;
+      padding-top: 1.2rem;
+      margin-top: 1.2rem;
+      font-style: normal;
+      background: transparent;
+    }
+
+    /* ----- MOBILE FRIENDLY ----- */
+    @media (max-width: 550px) {
+      body { padding: 0.8rem; }
+      .card { padding: 1.8rem 1.2rem; border-radius: 2rem; }
+      h1 { font-size: 2rem; }
+      .subtitle { font-size: 1.1rem; padding: 0.3rem 1rem; }
+      .question-text { font-size: 1.1rem; }
+      .radio-group { gap: 0.8rem; }
+      .radio-option { font-size: 1rem; padding: 0.2rem 0.8rem 0.2rem 0.4rem; }
+      .check-btn { font-size: 1.3rem; padding: 0.7rem 1.8rem; min-width: 220px; }
+      .result-message { font-size: 1.5rem; }
+      .result-message::before { font-size: 1.7rem; }
+      .start-btn { font-size: 1.5rem; padding: 0.8rem 2.5rem; }
+    }
+
+    @media (max-width: 380px) {
+      .radio-group { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <!-- START SCREEN (visible initially) -->
+  <div class="start-screen" id="startScreen">
+    <h1>Would You Be an Entrepreneur?</h1>
+    <div class="subtitle">(Mini Personality Test)</div>
+    <button class="start-btn" id="startNowBtn">Start now</button>
+    <img 
+  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjcQJKIA4JxVEr8ZuMWJfVLU2BvnhNMq8YwPHEIuSa5uVcidtEAmFf2eBdSjRVCvOxfy0DzI93ym0O09nPSQhtZtvC2jOm7txg56LlydU98ryeCpqd0nk_tdnRhRoYw5gHgBjtwi5i0_O1T9-xqjmM1M6Ghs1mC9EiKt6CF-Yo_cZvG9v86qhWHpUtjeXXf/s512/STK-20250822-WA0098.jpg" 
+  alt="Entrepreneur Image"
+  style="
+    position: absolute;
+    bottom: 10%;
+    right: 8%;
+    width: 120px;
+    max-width: 25%;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+  "
+>
+  </div>
+
+  <!-- QUIZ CONTENT (hidden until start) -->
+  <div class="quiz-content" id="quizContent">
+    <!-- Title repeated for consistency (already inside start screen, but after start we hide start screen so we need title here) -->
+    <h1>Would You Be an Entrepreneur?</h1>
+    <div class="subtitle">(Mini Personality Test)</div>
+
+    <!-- QUESTIONNAIRE (5 items) -->
+    <div class="questions-area" id="quizQuestions">
+      <!-- question 1 -->
+      <div class="question-item">
+        <div class="question-text">1. Do you enjoy solving difficult problems or challenges?</div>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q1" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q1" value="no"> No</label>
+        </div>
+      </div>
+
+      <!-- question 2 -->
+      <div class="question-item">
+        <div class="question-text">2. Do you believe your success depends mainly on your own effort?</div>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q2" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q2" value="no"> No</label>
+        </div>
+      </div>
+
+      <!-- question 3 -->
+      <div class="question-item">
+        <div class="question-text">3. Can you make decisions even when you don’t have full information?</div>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q3" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q3" value="no"> No</label>
+        </div>
+      </div>
+
+      <!-- question 4 -->
+      <div class="question-item">
+        <div class="question-text">4. Are you willing to take moderate risks to achieve your goals?</div>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q4" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q4" value="no"> No</label>
+        </div>
+      </div>
+
+      <!-- question 5 -->
+      <div class="question-item">
+        <div class="question-text">5. Do you believe you can successfully run a business?</div>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q5" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q5" value="no"> No</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUTTON (clean text) -->
+    <div class="action-btn">
+      <button class="check-btn" id="checkResultBtn">Check Result</button>
+    </div>
+
+    <!-- DYNAMIC RESULT AREA -->
+    <div class="result-box" id="resultBox">
+      <div class="result-message no-crown" id="resultMessage">Answer all questions, then click.</div>
+      <div class="result-score" id="resultScore"></div>
+    </div>
+
+    <!-- GROWTH-ORIENTED NOTE (replaces theories list) -->
+    <div class="growth-note">
+      This mini brain teaser🧠 only reflects current tendencies based on psychological ideas about behavior and motivation.<br><br>
+      <strong>A low score does NOT mean you cannot become an entrepreneur.</strong><br>
+      Entrepreneurial qualities can be learned, developed and improved through training, experience and mindset.
+    </div>
+
+    <!-- FOOTER DISCLAIMER -->
+    <div class="disclaimer">
+      Disclaimer:<i>This is not a professional psychological assessment</i> <b>~ GROUP 1B</b>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript (embedded) -->
+<script>
+  (function() {
+    // ----- DOM elements for start control -----
+    const startScreen = document.getElementById('startScreen');
+    const quizContent = document.getElementById('quizContent');
+    const startBtn = document.getElementById('startNowBtn');
+
+    // Show quiz and hide start screen when "Start now" is clicked
+    startBtn.addEventListener('click', function() {
+      startScreen.style.display = 'none';
+      quizContent.style.display = 'block';   // make quiz visible
+    });
+
+    // ----- Original quiz logic (slightly adapted, works after quiz becomes visible) -----
+    const resultMessageEl = document.getElementById('resultMessage');
+    const resultScoreEl = document.getElementById('resultScore');
+    const checkBtn = document.getElementById('checkResultBtn');
+
+    // Array of question names (matches radio names)
+    const questionNames = ['q1', 'q2', 'q3', 'q4', 'q5'];
+
+    // helper: remove crown class, set default message
+    function setWaitingMessage() {
+      resultMessageEl.textContent = 'Answer all questions, then click.';
+      resultMessageEl.classList.add('no-crown');   // hides the crown ::before
+      resultScoreEl.textContent = '';
+    }
+
+    // main scoring function
+    function computeResult() {
+      // 1. VALIDATION: every question must have a selected radio
+      let allAnswered = true;
+      for (let name of questionNames) {
+        const checkedRadio = document.querySelector(`input[name="${name}"]:checked`);
+        if (!checkedRadio) {
+          allAnswered = false;
+          break;
+        }
+      }
+
+      // 2. if not all answered → show error (no emoji, no crown)
+      if (!allAnswered) {
+        resultMessageEl.textContent = 'Please answer all 5 questions.';
+        resultMessageEl.classList.add('no-crown', 'error-message');
+        resultScoreEl.textContent = '';
+        return;
+      } else {
+        // remove error styling and ensure crown can appear
+        resultMessageEl.classList.remove('error-message');
+      }
+
+      // 3. calculate score (yes = 1, no = 0)
+      let score = 0;
+      for (let name of questionNames) {
+        const checked = document.querySelector(`input[name="${name}"]:checked`);
+        if (checked.value === 'yes') {
+          score++;
+        }
+      }
+
+      // 4. determine category (friendlier wording)
+      let category = '';
+      if (score >= 0 && score <= 2) {
+        category = 'You may not strongly show entrepreneurial traits yet';
+      } else if (score === 3 || score === 4) {
+        category = 'You show some entrepreneurial tendencies';
+      } else if (score === 5) {
+        category = 'You strongly show entrepreneurial tendencies';
+      }
+
+      // 5. display result with crown prefix (class "no-crown" removed)
+      resultMessageEl.textContent = `Your score: ${score}/5 — ${category}.`;
+      resultMessageEl.classList.remove('no-crown');   // crown appears via CSS ::before
+      resultScoreEl.textContent = '';                 // extra line not needed
+    }
+
+    // attach event listener to check button
+    checkBtn.addEventListener('click', computeResult);
+
+    // reset message when user changes any radio (removes old error/result)
+    const allRadios = document.querySelectorAll('input[type="radio"]');
+    for (let radio of allRadios) {
+      radio.addEventListener('change', function() {
+        // Only reset if the current message is not the waiting message
+        const currentMsg = resultMessageEl.textContent;
+        if (!currentMsg.includes('Answer all questions')) {
+          setWaitingMessage();
+        }
+      });
+    }
+
+    // initialise waiting message (will be applied after quiz becomes visible,
+    // but we set it now anyway; it's fine because element exists)
+    setWaitingMessage();
+  })();
+</script>
+
+<!-- 
+  MODIFICATION SUMMARY:
+  • Added a start screen with title, subtitle and "Start now" button.
+  • Wrapped all original quiz content in a div.quiz-content (hidden initially).
+  • Clicking "Start now" hides start screen and shows quiz content.
+  • Title and subtitle are duplicated inside quiz content so they remain visible after start.
+  • Preserved all existing styles, crown logic, friendly messages, and growth note.
+  • Start button styled consistently with the rest (soft blue/green).
+-->
+</body>
+</html>
